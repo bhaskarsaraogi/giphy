@@ -45,19 +45,23 @@ import (
 
 	"github.com/peterhellberg/giphy"
 	"flag"
+	"os/exec"
 )
+
+var command = flag.String("command", "", strings.Join([]string{
+	"Commands:",
+	"search, s           [args]",
+	"gif, id             [args]",
+	"random, rand, r     [args]",
+	"translate, trans, t [args]",
+	"trending, trend, tr [args]",
+}, "\n\t"))
+
+var render = flag.Bool("render", false, "Boolean flag to render the GIF in browser or not")
+
 
 func main() {
 	g := giphy.DefaultClient
-
-	var command = flag.String("command", "", strings.Join([]string{
-		"Commands:",
-		"search, s           [args]",
-		"gif, id             [args]",
-		"random, rand, r     [args]",
-		"translate, trans, t [args]",
-		"trending, trend, tr [args]",
-	}, "\n\t"))
 
 	flag.Parse()
 
@@ -86,7 +90,20 @@ func search(c *giphy.Client, args []string) {
 
 	for _, d := range res.Data {
 		fmt.Println(d.Images.Original.URL)
+
+		renderInBrowswer(d.Images.Original.URL)
 	}
+}
+
+func renderInBrowswer(URL string) {
+	if *render {
+		out, err := exec.Command("open", URL).Output()
+		if err != nil {
+			fmt.Printf("%s", err)
+		}
+		fmt.Printf("%s", out)
+	}
+
 }
 
 func gif(c *giphy.Client, args []string) {
@@ -102,6 +119,8 @@ func gif(c *giphy.Client, args []string) {
 	}
 
 	fmt.Println(res.Data.Images.Original.URL)
+
+	renderInBrowswer(res.Data.Images.Original.URL)
 }
 
 func random(c *giphy.Client, args []string) {
@@ -112,6 +131,8 @@ func random(c *giphy.Client, args []string) {
 	}
 
 	fmt.Println(res.Data.ImageOriginalURL)
+
+	renderInBrowswer(res.Data.ImageOriginalURL)
 }
 
 func translate(c *giphy.Client, args []string) {
@@ -122,6 +143,8 @@ func translate(c *giphy.Client, args []string) {
 	}
 
 	fmt.Println(res.Data.Images.Original.URL)
+
+	renderInBrowswer(res.Data.Images.Original.URL)
 }
 
 func trending(c *giphy.Client, args []string) {
@@ -133,5 +156,7 @@ func trending(c *giphy.Client, args []string) {
 
 	for _, d := range res.Data {
 		fmt.Println(d.Images.Original.URL)
+
+		renderInBrowswer(d.Images.Original.URL)
 	}
 }

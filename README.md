@@ -35,6 +35,16 @@ http://media2.giphy.com/media/L2u68v1MmZv5m/giphy.gif
 http://media1.giphy.com/media/4WOs6Af0nOOeQ/giphy.gif
 ```
 
+```
+use -render flag to open the gif in browser too
+
+GIPHY_LIMIT=4 giphy -comand=search -render computer
+http://media3.giphy.com/media/wvHC7zyCedEI0/giphy.gif
+http://media3.giphy.com/media/gr8K2b72UefvO/giphy.gif
+http://media2.giphy.com/media/L2u68v1MmZv5m/giphy.gif
+http://media1.giphy.com/media/4WOs6Af0nOOeQ/giphy.gif
+```
+
 ## Examples of using the library
 
 ### translate.go
