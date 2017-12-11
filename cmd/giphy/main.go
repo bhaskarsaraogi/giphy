@@ -49,6 +49,8 @@ import (
 func main() {
 	g := giphy.DefaultClient
 
+	// TODO make it use golang flags
+
 	if len(os.Args) < 2 {
 		fmt.Println(strings.Join([]string{
 			"Commands:",

@@ -41,6 +41,7 @@ type Trending struct {
 type Data struct {
 	Type             string `json:"type"`
 	ID               string `json:"id"`
+	Slug             string `json:"slug"`
 	URL              string `json:"url"`
 	BitlyGifURL      string `json:"bitly_gif_url"`
 	BitlyURL         string `json:"bitly_url"`
@@ -49,10 +50,16 @@ type Data struct {
 	Source           string `json:"source"`
 	Rating           string `json:"rating"`
 	Caption          string `json:"caption"`
+	User 			 User	`json:"user"`
 	ContentURL       string `json:"content_url"`
+	SourceTLD		 string `json:"source_tld"`
+	SourcePostURL    string `json:"source_post_url"`
+	UpdateDatetime   string `json:"update_datetime"`
+	CreateDatetime   string `json:"create_datetime"`
 	ImportDatetime   string `json:"import_datetime"`
 	TrendingDatetime string `json:"trending_datetime"`
 	Images           Images `json:"images"`
+	Title			 string `json:"title"`
 }
 
 // RandomData represents data section in random response from the Giphy API
@@ -100,6 +107,9 @@ type Image struct {
 	Size   string `json:"size,omitempty"`
 	Frames string `json:"frames,omitempty"`
 	Mp4    string `json:"mp4,omitempty"`
+	Mp4Size string `json:"mp4_size,omitempty"`
+	Webp string `json:"webp,omitempty"`
+	WebpSize string `json:"webp_size,omitempty"`
 }
 
 // Pagination represents the pagination section in a Giphy API response
@@ -111,6 +121,16 @@ type Pagination struct {
 
 // Meta represents the meta section in a Giphy API response
 type Meta struct {
-	Status int    `json:"status"`
-	Msg    string `json:"msg"`
+	Status     int    `json:"status"`
+	Msg        string `json:"msg"`
+	ResponseId string `json:"response_id"`
+}
+
+type User struct {
+	AvatarURL    string `json:"avatar_url"`
+	BannerURL    string `json:"banner_url"`
+	ProfileURL   string `json:"profile_url"`
+	Username     string `json:"username"`
+	DisplayName  string `json:"display_name"`
+	Twitter   	 string `json:"twitter"`
 }
