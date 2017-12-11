@@ -46,6 +46,7 @@ import (
 	"github.com/peterhellberg/giphy"
 	"flag"
 	"os/exec"
+	"runtime"
 )
 
 var command = flag.String("command", "", strings.Join([]string{
@@ -91,16 +92,41 @@ func search(c *giphy.Client, args []string) {
 	for _, d := range res.Data {
 		fmt.Println(d.Images.Original.URL)
 
-		renderInBrowswer(d.Images.Original.URL)
+		renderInBrowser(d.Images.Original.URL)
 	}
 }
 
-func renderInBrowswer(URL string) {
+func renderInBrowser(URL string) {
 
-	_, err := exec.LookPath("open")
+	if *render {
+		switch runtime.GOOS {
+		case "darwin":
+			_, err := exec.LookPath("open")
 
-	if *render && err == nil {
-		exec.Command("open", URL).Output()
+			if err == nil {
+				exec.Command("open", URL).Output()
+			} else {
+				fmt.Println("Couldnt open in browser, missing package")
+			}
+		case "windows":
+			_, err := exec.LookPath("start")
+
+			if err == nil {
+				exec.Command("start", URL).Output()
+			} else {
+				fmt.Println("Couldnt open in browser, missing package")
+			}
+		case "linux":
+			_, err := exec.LookPath("xdg-open")
+
+			if err == nil {
+				exec.Command("xdg-open", URL).Output()
+			} else {
+				fmt.Println("Couldnt open in browser, missing package")
+			}
+		default:
+			fmt.Println("Couldnt open in browser, missing package")
+		}
 	}
 
 }
@@ -119,7 +145,7 @@ func gif(c *giphy.Client, args []string) {
 
 	fmt.Println(res.Data.Images.Original.URL)
 
-	renderInBrowswer(res.Data.Images.Original.URL)
+	renderInBrowser(res.Data.Images.Original.URL)
 }
 
 func random(c *giphy.Client, args []string) {
@@ -131,7 +157,7 @@ func random(c *giphy.Client, args []string) {
 
 	fmt.Println(res.Data.ImageOriginalURL)
 
-	renderInBrowswer(res.Data.ImageOriginalURL)
+	renderInBrowser(res.Data.ImageOriginalURL)
 }
 
 func translate(c *giphy.Client, args []string) {
@@ -143,7 +169,7 @@ func translate(c *giphy.Client, args []string) {
 
 	fmt.Println(res.Data.Images.Original.URL)
 
-	renderInBrowswer(res.Data.Images.Original.URL)
+	renderInBrowser(res.Data.Images.Original.URL)
 }
 
 func trending(c *giphy.Client, args []string) {
@@ -156,6 +182,6 @@ func trending(c *giphy.Client, args []string) {
 	for _, d := range res.Data {
 		fmt.Println(d.Images.Original.URL)
 
-		renderInBrowswer(d.Images.Original.URL)
+		renderInBrowser(d.Images.Original.URL)
 	}
 }
