@@ -28,7 +28,7 @@ Commands:
 ```
 
 ```bash
-GIPHY_LIMIT=4 giphy search computer
+GIPHY_LIMIT=4 giphy -comand=search computer
 http://media3.giphy.com/media/wvHC7zyCedEI0/giphy.gif
 http://media3.giphy.com/media/gr8K2b72UefvO/giphy.gif
 http://media2.giphy.com/media/L2u68v1MmZv5m/giphy.gif

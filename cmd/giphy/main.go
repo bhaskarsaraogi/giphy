@@ -44,41 +44,36 @@ import (
 	"strings"
 
 	"github.com/peterhellberg/giphy"
+	"flag"
 )
 
 func main() {
 	g := giphy.DefaultClient
 
-	// TODO make it use golang flags
+	var command = flag.String("command", "", strings.Join([]string{
+		"Commands:",
+		"search, s           [args]",
+		"gif, id             [args]",
+		"random, rand, r     [args]",
+		"translate, trans, t [args]",
+		"trending, trend, tr [args]",
+	}, "\n\t"))
 
-	if len(os.Args) < 2 {
-		fmt.Println(strings.Join([]string{
-			"Commands:",
-			"search, s           [args]",
-			"gif, id             [args]",
-			"random, rand, r     [args]",
-			"translate, trans, t [args]",
-			"trending, trend, tr [args]",
-		}, "\n\t"))
+	flag.Parse()
 
-		return
-	}
-
-	args := os.Args[1:]
-
-	switch args[0] {
+	switch *command {
 	default:
-		search(g, args)
+		flag.PrintDefaults()
 	case "search", "s":
-		search(g, args[1:])
+		search(g, flag.Args())
 	case "gif", "id":
-		gif(g, args[1:])
+		gif(g, flag.Args())
 	case "random", "rand", "r":
-		random(g, args[1:])
+		random(g, flag.Args())
 	case "translate", "trans", "t":
-		translate(g, args[1:])
+		translate(g, flag.Args())
 	case "trending", "trend", "tr":
-		trending(g, args[1:])
+		trending(g, flag.Args())
 	}
 }
 
