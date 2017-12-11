@@ -97,11 +97,7 @@ func search(c *giphy.Client, args []string) {
 
 func renderInBrowswer(URL string) {
 	if *render {
-		out, err := exec.Command("open", URL).Output()
-		if err != nil {
-			fmt.Printf("%s", err)
-		}
-		fmt.Printf("%s", out)
+		exec.Command("open", URL).Output()
 	}
 
 }
